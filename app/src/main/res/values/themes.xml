@@ -1,0 +1,62 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.W2A" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/red_400</item>
+        <item name="colorPrimaryVariant">@color/red_200</item>
+        <item name="colorOnPrimary">@color/only_white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/orange_200</item>
+        <item name="colorSecondaryVariant">@color/orange_400</item>
+        <item name="colorOnSecondary">@color/only_black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/red_200</item>
+        <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+
+        <!-- Customize your theme here. -->
+        <item name="material_dialog_background">@color/littlewhite_liteblack</item>
+        <item name="material_dialog_title_text_color">@color/black_white</item>
+        <item name="material_dialog_message_text_color">@color/black_white</item>
+        <item name="material_dialog_positive_button_color">@color/red_400</item>
+        <item name="material_dialog_positive_button_text_color">@color/only_white</item>
+        <item name="material_dialog_negative_button_text_color">@color/black_white</item>
+    </style>
+
+
+    <style name="Theme.TransparentStatusBar" parent="Theme.W2A">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="android:statusBarColor" >@color/red_200</item>
+        <!-- Set the splash screen background, animated icon, and animation duration. -->
+        <item name="windowSplashScreenBackground">@color/mainBg</item>
+
+        <!-- Use windowSplashScreenAnimatedIcon to add either a drawable or an
+             animated drawable. One of these is required. -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo_padded</item>
+        <!-- Required for animated icons -->
+        <item name="windowSplashScreenAnimationDuration">200</item>
+
+        <!-- Set the theme of the Activity that directly follows your splash screen. -->
+        <!-- Required -->
+        <item name="postSplashScreenTheme">@style/Theme.W2A</item>
+    </style>
+
+
+    <style name="Theme.W2A.AdAttribution">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:textColor">@color/white_black</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:text">@string/ad_attribution</item>
+        <item name="android:background">#FFCC66</item>
+        <item name="android:width">15dp</item>
+        <item name="android:height">15dp</item>
+    </style>
+
+    <string name="ad_attribution">ad</string>
+</resources>

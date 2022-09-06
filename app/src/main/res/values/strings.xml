@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">Liverpool Faithful</string>
+
+    <string name="small_text">Small</string>
+    <string name="default_text">Normal</string>
+    <string name="large_text">Large</string>
+
+    <string-array name="text_entries">
+        <item>@string/small_text</item>
+        <item>@string/default_text</item>
+        <item>@string/large_text</item>
+    </string-array>
+
+
+    <string name="home">Home</string>
+    <string name="categories">Categories</string>
+    <string name="search">Search</string>
+    <string name="heart">Heart</string>
+    <string name="user">User</string>
+    <string name="settings">Settings</string>
+    <string name="notification">Notification</string>
+    <string name="pref_notification_summ">on/off notification from this app</string>
+    <string name="select_size">Select size</string>
+    <string name="text_size">Text size</string>
+    <string name="pref_animation_sum">If you have a low end device or facing lag for animation, you can turn it off here</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="search_here">Search here…</string>
+    <string name="nothing_searched">you haven\'t searched anything yet. Search something to see results</string>
+    <string name="no_results_found">no results found. Try refreshing…</string>
+    <string name="title_activity_category_based_post_list">CategoryBasedPostList</string>
+
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+
+    <string name="got_an_error">Got an error!!</string>
+    <string name="retry">Retry</string>
+    <string name="exit">exit</string>
+    <string name="share">Share</string>
+    <string name="post_share_text">"Read this awesome post: "</string>
+    <string name="copy_url">Copy url</string>
+    <string name="about_us">About us</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="contact_us">Contact us</string>
+    <string name="rating">Rate us</string>
+    <string name="more_apps">More apps</string>
+    <string name="general_menu">General Menu</string>
+    <string name="additional_menu">Additional Menu</string>
+    <string name="about_us_url">https://liverpoolfaithful.com/about-us/</string>
+    <string name="contact_us_url">https://liverpoolfaithful.com/contact-us/</string>
+    <string name="privacy_policy_url">https://liverpoolfaithful.com/privacy-policy/</string>
+    <string name="more_apps_url">https://play.google.com/store/apps/developer?id=Elcrema+Concept</string>
+    <string name="other">Other</string>
+    <string name="tagline">THE RED DEVILS</string>
+    <string name="share_text">"Install this awesome app. "</string>
+    <string name="ok">OK</string>
+    <string name="update_alert_title">Update required</string>
+    <string name="update_alert_desc">You should update the to use the latest features…</string>
+    <string name="exitAlertTitle">Sure Exit?</string>
+    <string name="exitAlertMsg">Are you sure you want to exit the app?</string>
+    <string name="cancel">Cancel</string>
+    <string name="related_posts">You might like:</string>
+    <string name="no_comments_found">No comments found</string>
+    <string name="submit">Submit</string>
+    <string name="admob_app_id">ca-app-pub-2620840717119991~2498990771</string>
+    <string name="banner_ads_id">ca-app-pub-2620840717119991/5383340266</string>
+    <string name="interstitial_ads_id">ca-app-pub-2620840717119991/9711266384</string>
+    <string name="native_ad_id">ca-app-pub-2620840717119991/5772021379</string>
+
+</resources>

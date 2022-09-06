@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "447028880601",
+    "project_id": "liverpool-faithful",
+    "storage_bucket": "liverpool-faithful.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447028880601:android:c70638165daf3541d88ac8",
+        "android_client_info": {
+          "package_name": "com.liverpoolfaithful.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447028880601-6ogbec18dmj4le73hmus2lm2k7saj0st.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzdPVFLyBXkG1umpVnKy-EOpSz4T847ac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447028880601-6ogbec18dmj4le73hmus2lm2k7saj0st.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-2620840717119991~2498990771"
+    }
+  ],
+  "configuration_version": "1"
+}

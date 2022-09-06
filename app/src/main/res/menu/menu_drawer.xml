@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_home"
+            android:icon="@drawable/icon_home"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/action_categories"
+            android:icon="@drawable/icon_category"
+            android:title="@string/categories" />
+        <item
+            android:id="@+id/action_search"
+            android:icon="@drawable/icon_search"
+            android:title="@string/search" />
+        <item
+            android:id="@+id/action_heart"
+            android:icon="@drawable/icon_heartthin"
+            android:title="@string/heart" />
+        <item
+            android:id="@+id/action_user"
+            android:icon="@drawable/icon_user"
+            android:title="@string/user" />
+    </group>
+    <item android:title="@string/other">
+        <menu>
+
+
+            <item
+                android:id="@+id/action_about_us"
+                android:icon="@drawable/about"
+                android:title="@string/about_us" />
+
+            <item
+                android:id="@+id/action_privacy_policy"
+                android:icon="@drawable/privacy"
+                android:title="@string/privacy_policy" />
+
+            <item
+                android:id="@+id/action_share"
+                android:icon="@drawable/ic_baseline_share_24"
+                android:title="@string/share" />
+
+            <item
+                android:id="@+id/action_rate_app"
+                android:icon="@drawable/rating"
+                android:title="@string/rating" />
+
+            <item
+                android:id="@+id/action_more_app"
+                android:icon="@drawable/more"
+                android:title="@string/more_apps" />
+
+
+        </menu>
+    </item>
+</menu>

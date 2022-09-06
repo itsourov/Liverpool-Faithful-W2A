@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="red_400">#ff1717</color>
+    <color name="red_200">#FF0000</color>
+    <color name="orange_200">#FFAC47</color>
+    <color name="orange_400">#FF8C00</color>
+
+    <color name="cyan_blue">#004870</color>
+
+    <color name="mainBg">#E4E4E4</color>
+    <color name="ColorShimmer">#dddddd</color>
+    <color name="black_white">#FF000000</color>
+    <color name="white_black">#FFFFFF</color>
+    <color name="littlewhite_liteblack">#F6F6F6</color>
+    <color name="white_liteBlack">#FFFFFF</color>
+    <color name="only_black">#FF000000</color>
+    <color name="only_white">#FFFFFF</color>
+
+
+    <color name="pink">#FF00FF</color>
+    <color name="red">#da310a</color>
+    <color name="orange">#FF9500</color>
+    <color name="green">#45cd78</color>
+    <color name="gray">#969696</color>
+
+    <color name="toolbar_color">@color/white_black</color>
+</resources>

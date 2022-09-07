@@ -20,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.liverpoolfaithful.app.adapter.HomepagePagerAdapter;
+import com.liverpoolfaithful.app.adapter.RecentPostsAdapter;
 import com.liverpoolfaithful.app.fragment.CategoryListFragment;
 import com.liverpoolfaithful.app.fragment.HeartFragment;
 import com.liverpoolfaithful.app.fragment.PostListFragment;
@@ -28,6 +29,10 @@ import com.liverpoolfaithful.app.fragment.UserFragment;
 import com.liverpoolfaithful.app.helper.Configs;
 import com.liverpoolfaithful.app.helper.MasterSourov;
 import com.liverpoolfaithful.app.helper.SaveState;
+import com.liverpoolfaithful.app.model.Post;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 
@@ -58,6 +63,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         imageLink = getIntent().getStringExtra("imageLink");
         selfUrl = getIntent().getStringExtra("selfUrl");
         if (postID != null) {
+
+            List<Post> list = new ArrayList<>();
+            RecentPostsAdapter adapter = new RecentPostsAdapter(list,MainActivity.this);
+            adapter.showInterstitialAds();
+
+
             Intent intent = new Intent(MainActivity.this, PostDetails.class);
 
             Bundle bundle = new Bundle();

@@ -17,6 +17,10 @@
         android:theme="@style/Theme.W2A"
         tools:targetApi="31">
         <activity
+            android:launchMode="singleTop"
+            android:name=".NotificationProcess"
+            android:exported="false" />
+        <activity
             android:name=".ImageViewer"
             android:exported="false" />
         <activity

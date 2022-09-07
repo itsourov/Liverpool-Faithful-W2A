@@ -47,11 +47,7 @@ import com.liverpoolfaithful.app.helper.MasterSourov;
 import com.liverpoolfaithful.app.helper.SaveState;
 import com.liverpoolfaithful.app.model.Post;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class RecentPostsAdapter extends RecyclerView.Adapter<RecentPostsAdapter.ViewHolder> {
 
@@ -204,7 +200,7 @@ public class RecentPostsAdapter extends RecyclerView.Adapter<RecentPostsAdapter.
                     }
 
                     if (Configs.showInterstitialAds){
-                        showAds();
+                        showInterstitialAds();
                     }
 
 
@@ -348,7 +344,7 @@ public class RecentPostsAdapter extends RecyclerView.Adapter<RecentPostsAdapter.
     }
 
 
-    private void showAds() {
+    public void showInterstitialAds() {
 
         InterstitialAd.load(context, context.getResources().getString(R.string.interstitial_ads_id), adRequest,
                 new InterstitialAdLoadCallback() {

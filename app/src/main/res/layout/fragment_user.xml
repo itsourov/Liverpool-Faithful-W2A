@@ -44,6 +44,66 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/itemLayoutSelect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:adjustViewBounds="true"
+                        android:padding="10dp"
+                        android:src="@drawable/layout"
+                        app:tint="@color/black_white" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:text="Homepage Layout"
+                        android:textColor="@color/black_white"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageButton
+                            android:id="@+id/layout_grid"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:adjustViewBounds="true"
+                            android:padding="10dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/grid"
+                            app:tint="@color/black_white" />
+                        <ImageButton
+                            android:id="@+id/layout_Linear"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:scaleType="centerInside"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:adjustViewBounds="true"
+                            android:padding="10dp"
+                            android:src="@drawable/list"
+                            app:tint="@color/black_white" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/itemAboutUs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

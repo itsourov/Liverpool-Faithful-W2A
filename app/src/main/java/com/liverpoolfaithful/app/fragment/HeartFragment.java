@@ -19,6 +19,7 @@ import com.liverpoolfaithful.app.R;
 import com.liverpoolfaithful.app.adapter.RecentPostsAdapter;
 import com.liverpoolfaithful.app.database.BookmarkSaver;
 import com.liverpoolfaithful.app.helper.Configs;
+import com.liverpoolfaithful.app.helper.SaveState;
 import com.liverpoolfaithful.app.model.Post;
 
 import java.util.ArrayList;
@@ -31,8 +32,8 @@ public class HeartFragment extends Fragment {
     RecentPostsAdapter adapter;
     BookmarkSaver bookmarkSaver;
     SwipeRefreshLayout SRLInFH;
-    View resultViewInFH,nothingSearchedView;
-
+    View resultViewInFH, nothingSearchedView;
+    SaveState saveState;
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
@@ -41,7 +42,7 @@ public class HeartFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_heart, container, false);
 
-
+        saveState = new SaveState(getContext());
         bookmarkSaver = new BookmarkSaver(getActivity());
 
         resultViewInFH = view.findViewById(R.id.resultViewInFH);
@@ -50,19 +51,13 @@ public class HeartFragment extends Fragment {
         posts = new ArrayList<>();
         SRLInFH = view.findViewById(R.id.SRLInFH);
         rvRecentHeartList = view.findViewById(R.id.rvRecentHeartList);
-        if (Configs.applyGridLayout){
-            rvRecentHeartList.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        }else {
-            rvRecentHeartList.setLayoutManager(new LinearLayoutManager(getContext()));
-        }
 
-        adapter = new RecentPostsAdapter(posts, requireContext());
-        adapter.bookmark = true;
-        rvRecentHeartList.setAdapter(adapter);
+        init();
 
         new doingInBGBookmark().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         SRLInFH.setOnRefreshListener(() -> {
+            init();
             nothingSearchedView.setVisibility(View.GONE);
             resultViewInFH.setVisibility(View.VISIBLE);
             posts.clear();
@@ -73,6 +68,18 @@ public class HeartFragment extends Fragment {
 
         });
         return view;
+    }
+
+    private void init() {
+        if (saveState.getApplyGridLayout()) {
+            rvRecentHeartList.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        } else {
+            rvRecentHeartList.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
+
+        adapter = new RecentPostsAdapter(posts, requireContext());
+        adapter.bookmark = true;
+        rvRecentHeartList.setAdapter(adapter);
     }
 
 
@@ -110,6 +117,7 @@ public class HeartFragment extends Fragment {
                 p.setId(cursor.getString(4));
                 p.setSelfUrl(cursor.getString(5));
                 p.setDate(cursor.getString(6));
+                p.setAgo_time(cursor.getString(6));
 
 
                 publishProgress(p);

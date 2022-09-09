@@ -13,6 +13,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewFeature;
@@ -23,6 +24,15 @@ import com.android.volley.ParseError;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.InstallStateUpdatedListener;
@@ -49,6 +59,12 @@ public class MasterSourov {
     public static final int RC_APP_UPDATE = 69420;
 
     SaveState saveState ;
+
+
+    private InterstitialAd mInterstitialAd;
+    AdRequest adRequest;
+    boolean isAdShowIng = false;
+
     public MasterSourov(Activity activity) {
         this.activity = activity;
         context = activity;
@@ -57,9 +73,18 @@ public class MasterSourov {
         saveState = new SaveState(activity);
 
 
+        MobileAds.initialize(activity, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        adRequest = new AdRequest.Builder().build();
+
     }
 
     public void  initNotification(){
+
         if (saveState.isNotificationOn()) {
             FirebaseMessaging.getInstance().subscribeToTopic(context.getPackageName());
         } else {
@@ -119,7 +144,13 @@ public class MasterSourov {
         webView.getSettings().setPluginState(WebSettings.PluginState.ON);
 
 
-        webView.getSettings().setDefaultFontSize(20);
+        if (saveState.getTextSize().equals(context.getResources().getString(R.string.small_text))) {
+            webView.getSettings().setDefaultFontSize(17);
+        } else if (saveState.getTextSize().equals(context.getResources().getString(R.string.default_text))) {
+            webView.getSettings().setDefaultFontSize(20);
+        } else if (saveState.getTextSize().equals(context.getResources().getString(R.string.large_text))) {
+            webView.getSettings().setDefaultFontSize(23);
+        }
 
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
             switch (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
@@ -300,5 +331,63 @@ public class MasterSourov {
 
         return convTime;
     }
+
+    public void showInterstitialAds() {
+
+
+
+        InterstitialAd.load(context, context.getResources().getString(R.string.interstitial_ads_id), adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+
+                        if (!isAdShowIng) {
+                            mInterstitialAd.show(activity);
+                        }
+
+                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                            @Override
+                            public void onAdClicked() {
+
+                            }
+
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+
+                                mInterstitialAd = null;
+                                isAdShowIng = false;
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+
+                                mInterstitialAd = null;
+                              showToast(adError.getMessage());
+                            }
+
+                            @Override
+                            public void onAdImpression() {
+
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                isAdShowIng = true;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                     showToast(loadAdError.getMessage());
+                        mInterstitialAd = null;
+                    }
+                });
+    }
+
 
 }

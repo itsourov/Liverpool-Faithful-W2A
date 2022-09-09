@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,7 +66,7 @@ public class CommentListFragment extends BottomSheetDialogFragment {
     RequestQueue queue;
 
     NestedScrollView nothingFoundView;
-
+    SharedPreferences saved_values;
 
     public CommentListFragment() {
         // Required empty public constructor
@@ -87,6 +89,8 @@ public class CommentListFragment extends BottomSheetDialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_comment_list, container, false);
         sourov = new MasterSourov(getActivity());
+
+        saved_values = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         queue = Volley.newRequestQueue(requireContext());
 
@@ -145,6 +149,8 @@ public class CommentListFragment extends BottomSheetDialogFragment {
 
                 ProgressBar progressBar = commentDialog.findViewById(R.id.progressBar);
 
+                nameBoxOnCommentInput.setText(saved_values.getString("user_name",""));
+                emailBoxOnCommentInput.setText(saved_values.getString("user_email",""));
                 commentDialog.findViewById(R.id.cancelButton).setOnClickListener(v1 -> {
                     //your business logic
                     commentDialog.dismiss();
@@ -166,8 +172,16 @@ public class CommentListFragment extends BottomSheetDialogFragment {
 
                                 progressBar.setVisibility(View.GONE);
                                 commentDialog.dismiss();
-                                Log.d("TAG", "onResponse: "+response);
-                                sourov.showToast("Comment submitted");
+
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+
+                                    sourov.showToast("Comment submitted! Status: " + jsonObject.getString("status"));
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
                             }
                         }, new Response.ErrorListener() {
                             @Override
@@ -201,6 +215,11 @@ public class CommentListFragment extends BottomSheetDialogFragment {
 
                         stringRequesta.setShouldCache(false);
                         queue.add(stringRequesta);
+
+                        SharedPreferences.Editor editor=saved_values.edit();
+                        editor.putString("user_name",name);
+                        editor.putString("user_email",email);
+                        editor.apply();
                     }
                 });
             }
@@ -223,7 +242,7 @@ public class CommentListFragment extends BottomSheetDialogFragment {
                         JSONArray jsonArr = new JSONArray(data);
                         loadToRev(jsonArr);
                         toolbar.setTitle("Comments (" + jsonArr.length() + ")");
-                        if (jsonArr.length()==0){
+                        if (jsonArr.length() == 0) {
                             gotAnError();
                         }
                     } catch (JSONException e) {
@@ -254,7 +273,6 @@ public class CommentListFragment extends BottomSheetDialogFragment {
 
     private void loadToRev(JSONArray response) {
         adapter.showShimmer = false;
-
 
 
         for (int i = 0; i < response.length(); i++) {

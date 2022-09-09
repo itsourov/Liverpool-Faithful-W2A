@@ -19,6 +19,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.liverpoolfaithful.app.MainActivity;
 import com.liverpoolfaithful.app.NotificationProcess;
+import com.liverpoolfaithful.app.PostDetails;
 import com.liverpoolfaithful.app.R;
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendNotification(RemoteMessage remoteMessage) {
-        Intent intent = new Intent(this, NotificationProcess.class);
+        Intent intent = new Intent(this, PostDetails.class);
         intent.putExtra("postID",remoteMessage.getData().get("postID"));
         intent.putExtra("title",remoteMessage.getData().get("title"));
         intent.putExtra("imageLink",remoteMessage.getData().get("imageLink"));

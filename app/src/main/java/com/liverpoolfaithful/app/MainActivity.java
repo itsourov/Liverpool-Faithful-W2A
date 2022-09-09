@@ -20,7 +20,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.liverpoolfaithful.app.adapter.HomepagePagerAdapter;
-import com.liverpoolfaithful.app.adapter.RecentPostsAdapter;
 import com.liverpoolfaithful.app.fragment.CategoryListFragment;
 import com.liverpoolfaithful.app.fragment.HeartFragment;
 import com.liverpoolfaithful.app.fragment.PostListFragment;
@@ -29,10 +28,6 @@ import com.liverpoolfaithful.app.fragment.UserFragment;
 import com.liverpoolfaithful.app.helper.Configs;
 import com.liverpoolfaithful.app.helper.MasterSourov;
 import com.liverpoolfaithful.app.helper.SaveState;
-import com.liverpoolfaithful.app.model.Post;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 
@@ -48,6 +43,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String postID;
+        postID = getIntent().getStringExtra("postID");
+
+        if (postID != null) {
+            Intent intent = new Intent(MainActivity.this, PostDetails.class);
+
+            intent.putExtras(getIntent().getExtras());
+            startActivity(intent);
+
+        }
+
+
         // Obtain the FirebaseAnalytics instance.
         FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
@@ -57,31 +64,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
-        String postID,title,imageLink,selfUrl;
-        postID = getIntent().getStringExtra("postID");
-        title = getIntent().getStringExtra("title");
-        imageLink = getIntent().getStringExtra("imageLink");
-        selfUrl = getIntent().getStringExtra("selfUrl");
-        if (postID != null) {
-
-            List<Post> list = new ArrayList<>();
-            RecentPostsAdapter adapter = new RecentPostsAdapter(list,MainActivity.this);
-            adapter.showInterstitialAds();
-
-
-            Intent intent = new Intent(MainActivity.this, PostDetails.class);
-
-            Bundle bundle = new Bundle();
-            bundle.putString("title", title);
-            bundle.putString("postID", postID);
-            bundle.putString("imageLink", imageLink);
-            bundle.putString("selfUrl", selfUrl);
-
-
-            intent.putExtras(bundle);
-            startActivity(intent);
-            finish();
-        }
         sourov = new MasterSourov(MainActivity.this);
         sourov.checkAppUpdate();
         sourov.initNotification();
@@ -129,14 +111,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
         sourov.onResume();
+
+
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

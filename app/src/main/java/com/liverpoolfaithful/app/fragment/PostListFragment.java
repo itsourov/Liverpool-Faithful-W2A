@@ -20,11 +20,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.liverpoolfaithful.app.PostDetails;
 import com.liverpoolfaithful.app.R;
 import com.liverpoolfaithful.app.adapter.RecentPostsAdapter;
 import com.liverpoolfaithful.app.helper.Configs;
 import com.liverpoolfaithful.app.helper.Constants;
 import com.liverpoolfaithful.app.helper.MasterSourov;
+import com.liverpoolfaithful.app.helper.SaveState;
 import com.liverpoolfaithful.app.model.Post;
 
 import org.json.JSONArray;
@@ -33,6 +35,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 
 
 public class PostListFragment extends Fragment {
@@ -55,6 +59,9 @@ public class PostListFragment extends Fragment {
     int pageNo = 1;
 
     MasterSourov sourov;
+    SaveState saveState;
+
+    boolean shouldCacheRequest = Configs.shouldCacheRequest;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,39 +81,47 @@ public class PostListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_post_list, container, false);
 
         sourov = new MasterSourov(getActivity());
+        saveState = new SaveState(getContext());
 
         SRLInFPL = view.findViewById(R.id.SRLInFPL);
 
-        if (catId==null){
+        if (catId == null) {
             loadingUrl = Constants.baseRestUrl + "posts?";
-        }else {
-            loadingUrl = Constants.baseRestUrl + "posts?categories="+catId+"&";
+        } else {
+            loadingUrl = Constants.baseRestUrl + "posts?categories=" + catId + "&";
         }
-
 
 
         posts = new ArrayList<>();
 
         spin_kit = view.findViewById(R.id.spin_kit);
         rvRecent = view.findViewById(R.id.rvRecentPostList);
-        if (Configs.applyGridLayout){
-            rvRecent.setLayoutManager(new GridLayoutManager(getContext(),2));
-        }else {
-            rvRecent.setLayoutManager(new LinearLayoutManager(getContext()));
-        }
 
-        adapter = new RecentPostsAdapter(posts, requireContext());
-        rvRecent.setAdapter(adapter);
 
+        init();
         variableReset();
         loadRestApi();
         recyclerViewOnBottom();
 
         SRLInFPL.setOnRefreshListener(() -> {
+            init();
+            shouldCacheRequest = false;
             variableReset();
             loadRestApi();
+
         });
         return view;
+    }
+
+    private void init() {
+        if (saveState.getApplyGridLayout()) {
+            rvRecent.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        } else {
+            rvRecent.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
+
+        adapter = new RecentPostsAdapter(posts, requireContext());
+        rvRecent.setAdapter(adapter);
     }
 
     private void recyclerViewOnBottom() {
@@ -139,7 +154,7 @@ public class PostListFragment extends Fragment {
         hasMorePosts = true;
         loading = false;
         posts.clear();
-        adapter.showShimmer=true;
+        adapter.showShimmer = true;
         rvRecent.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -164,9 +179,29 @@ public class PostListFragment extends Fragment {
                     }
 
                 }, error -> {
-          gotAnError();
+            if (pageNo == 1) {
+                MaterialDialog mDialog = new MaterialDialog.Builder(requireActivity())
+                        .setAnimation(R.raw.no_internet)
+                        .setTitle(getResources().getString(R.string.got_an_error))
+                        .setMessage(sourov.getVolleyResponse(error))
+                        .setCancelable(false)
+                        .setPositiveButton(getResources().getString(R.string.retry), (dialogInterface, which) -> {
+                            variableReset();
+                            loadRestApi();
+                            dialogInterface.dismiss();
+                        })
+                        .setNegativeButton(getResources().getString(R.string.cancel), (dialogInterface, which) -> dialogInterface.dismiss())
+                        .build();
+
+                // Show Dialog
+                mDialog.show();
+            }
+            gotAnError();
         });
-        if (!Configs.shouldCacheRequest){
+
+        if (shouldCacheRequest) {
+            stringRequest.setShouldCache(true);
+        } else {
             stringRequest.setShouldCache(false);
         }
         queue.add(stringRequest);
@@ -225,6 +260,12 @@ public class PostListFragment extends Fragment {
 
                 try {
                     p.setCategory_name(jsonObjectData.getJSONObject("w2a_by_sourov").getString("catName"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    p.setAgo_time(jsonObjectData.getJSONObject("w2a_by_sourov").getString("ago_time"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

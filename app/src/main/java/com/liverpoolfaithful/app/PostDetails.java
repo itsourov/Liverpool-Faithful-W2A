@@ -72,6 +72,7 @@ public class PostDetails extends AppCompatActivity {
     BookmarkSaver bookmarkSaver;
     RequestQueue queue;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -100,7 +101,9 @@ public class PostDetails extends AppCompatActivity {
             catName = bundle.getString("catName");
 
 
+
         }
+
 
 
         animation_view = findViewById(R.id.animation_view);
@@ -115,7 +118,12 @@ public class PostDetails extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle(null);
-        toolbar.setNavigationOnClickListener(vie -> onBackPressed());
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
 
         if (!Configs.postDetailsNoFM) {
@@ -171,6 +179,8 @@ public class PostDetails extends AppCompatActivity {
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "post");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
+
+
 
     @Override
     protected void onResume() {
@@ -238,7 +248,7 @@ public class PostDetails extends AppCompatActivity {
                             startActivity(getIntent());
                             overridePendingTransition(0, 0);
                         })
-                        .setNegativeButton(getResources().getString(R.string.exit), (dialogInterface, which) -> System.exit(0))
+                        .setNegativeButton(getResources().getString(R.string.cancel), (dialogInterface, which) -> dialogInterface.dismiss())
                         .build();
 
                 // Show Dialog
@@ -283,7 +293,7 @@ public class PostDetails extends AppCompatActivity {
 
         adapter = new RecentPostsAdapter(posts, this);
 
-        if (Configs.applyGridLayout){
+        if (saveState.getApplyGridLayout()){
             rvRelated.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
             adapter.isHorizontal = true;
         }else {
@@ -443,6 +453,9 @@ public class PostDetails extends AppCompatActivity {
 
             if (Configs.showBannerAds){
                 showAds();
+            }
+            if (Configs.showInterstitialAds){
+                sourov.showInterstitialAds();
             }
 
 

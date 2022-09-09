@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.liverpoolfaithful.app.R;
+
 
 public class SaveState {
     Context context;
@@ -25,13 +27,22 @@ public class SaveState {
     }
 
 
-//    public String getTextSize() {
-//        return mSettingsPreferences.getString(Constants.PREF_FONT_SIZE, context.getResources().getString(R.string.default_text));
-//    }
+    public String getTextSize() {
+        return mSettingsPreferences.getString(Constants.PREF_FONT_SIZE, context.getResources().getString(R.string.default_text));
+    }
 
     public boolean darkModeOn() {
         return mSettingsPreferences.getBoolean("pref_dark_mode", false);
     }
 
+    public boolean getApplyGridLayout(){
+        return mSettingsPreferences.getBoolean("pref_layout", true);
+    }
+
+    public void setApplyGridLayout(boolean applyGridLayout){
+        SharedPreferences.Editor editor=mSettingsPreferences.edit();
+        editor.putBoolean("pref_layout",applyGridLayout);
+        editor.apply();
+    }
 
 }

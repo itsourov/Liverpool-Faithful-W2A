@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -28,6 +29,7 @@ import com.liverpoolfaithful.app.adapter.RecentPostsAdapter;
 import com.liverpoolfaithful.app.helper.Configs;
 import com.liverpoolfaithful.app.helper.Constants;
 import com.liverpoolfaithful.app.helper.MasterSourov;
+import com.liverpoolfaithful.app.helper.SaveState;
 import com.liverpoolfaithful.app.model.Post;
 
 import org.json.JSONArray;
@@ -62,6 +64,7 @@ public class SearchFragment extends Fragment {
     int pageNo = 1;
 
     MasterSourov sourov;
+    SaveState saveState;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +73,7 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         sourov = new MasterSourov(getActivity());
+        saveState = new SaveState(getActivity());
         loadingUrl = Constants.baseRestUrl + "posts?";
 
         searchViewInFS = view.findViewById(R.id.searchViewInFS);
@@ -110,11 +114,10 @@ public class SearchFragment extends Fragment {
         posts = new ArrayList<>();
         spin_kit = view.findViewById(R.id.spin_kitOnFG);
         rvFS = view.findViewById(R.id.rvFS);
-        rvFS.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        adapter = new RecentPostsAdapter(posts, requireContext());
-        rvFS.setAdapter(adapter);
 
 
+
+        init();
         variableReset();
         loadRestApi();
         recyclerViewOnBottom();
@@ -124,6 +127,7 @@ public class SearchFragment extends Fragment {
             if (searchViewInFS.getText().length() > 0) {
                 nothingSearchedView.setVisibility(View.GONE);
                 resultViewInFS.setVisibility(View.VISIBLE);
+                init();
                 variableReset();
                 loadRestApi();
             } else {
@@ -134,6 +138,17 @@ public class SearchFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void init() {
+        if (saveState.getApplyGridLayout()) {
+            rvFS.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        } else {
+            rvFS.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
+
+        adapter = new RecentPostsAdapter(posts, requireContext());
+        rvFS.setAdapter(adapter);
     }
 
     private void recyclerViewOnBottom() {
@@ -263,6 +278,11 @@ public class SearchFragment extends Fragment {
 
                 try {
                     p.setCategory_name(jsonObjectData.getJSONObject("w2a_by_sourov").getString("catName"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    p.setAgo_time(jsonObjectData.getJSONObject("w2a_by_sourov").getString("ago_time"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

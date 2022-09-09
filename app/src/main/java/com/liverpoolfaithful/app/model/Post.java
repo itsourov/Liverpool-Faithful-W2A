@@ -7,6 +7,7 @@ public class Post {
     private String category_name;
     private String feature_image_thumb;
     private String feature_image_full;
+    private String ago_time;
     private int typeCode;
 
     public String getTitle() {
@@ -71,5 +72,13 @@ public class Post {
 
     public void setTypeCode(int typeCode) {
         this.typeCode = typeCode;
+    }
+
+    public String getAgo_time() {
+        return ago_time;
+    }
+
+    public void setAgo_time(String ago_time) {
+        this.ago_time = ago_time;
     }
 }

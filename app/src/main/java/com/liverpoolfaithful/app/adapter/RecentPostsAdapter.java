@@ -61,9 +61,7 @@ public class RecentPostsAdapter extends RecyclerView.Adapter<RecentPostsAdapter.
     MasterSourov sourov;
     BookmarkSaver bookmarkSaver;
 
-    private InterstitialAd mInterstitialAd;
-    AdRequest adRequest;
-    boolean isAdShowIng = false;
+
 
     public RecentPostsAdapter(List<Post> allPosts, Context context) {
         this.allPosts = allPosts;
@@ -75,13 +73,6 @@ public class RecentPostsAdapter extends RecyclerView.Adapter<RecentPostsAdapter.
         bookmarkSaver = new BookmarkSaver(activity);
 
 
-        MobileAds.initialize(activity, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-
-        adRequest = new AdRequest.Builder().build();
 
 
     }
@@ -130,7 +121,7 @@ public class RecentPostsAdapter extends RecyclerView.Adapter<RecentPostsAdapter.
             adLoader.loadAd(new AdRequest.Builder().build());
 
         } else {
-            if (Configs.applyGridLayout) {
+            if (saveState.getApplyGridLayout()) {
 
                 if (isHorizontal) {
                     v = layoutInflater.inflate(R.layout.single_post_item_grid_half_wide, parent, false);
@@ -176,7 +167,12 @@ public class RecentPostsAdapter extends RecyclerView.Adapter<RecentPostsAdapter.
 
                 }
 
-                holder.date_text.setText(sourov.convertToAGo(allPosts.get(position).getDate()));
+                if (allPosts.get(position).getAgo_time()==null || allPosts.get(position).getAgo_time().isEmpty()){
+                    holder.date_text.setText(sourov.convertToAGo(allPosts.get(position).getDate()));
+                }else {
+                    holder.date_text.setText(allPosts.get(position).getAgo_time());
+                }
+
 
                 holder.itemView.setOnClickListener(v -> {
 
@@ -199,9 +195,7 @@ public class RecentPostsAdapter extends RecyclerView.Adapter<RecentPostsAdapter.
                         context.startActivity(i);
                     }
 
-                    if (Configs.showInterstitialAds){
-                        showInterstitialAds();
-                    }
+
 
 
 
@@ -312,7 +306,7 @@ public class RecentPostsAdapter extends RecyclerView.Adapter<RecentPostsAdapter.
             ((TextView) adView.getPriceView()).setText(nativeAd.getPrice());
         }
 
-        if (Configs.applyGridLayout){
+        if (saveState.getApplyGridLayout()){
             adView.getStoreView().setVisibility(View.GONE);
         }else {
             if (nativeAd.getStore() == null) {
@@ -344,60 +338,6 @@ public class RecentPostsAdapter extends RecyclerView.Adapter<RecentPostsAdapter.
     }
 
 
-    public void showInterstitialAds() {
-
-        InterstitialAd.load(context, context.getResources().getString(R.string.interstitial_ads_id), adRequest,
-                new InterstitialAdLoadCallback() {
-                    @Override
-                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                        // The mInterstitialAd reference will be null until
-                        // an ad is loaded.
-                        mInterstitialAd = interstitialAd;
-
-                        if (!isAdShowIng) {
-                            mInterstitialAd.show(activity);
-                        }
-
-                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                            @Override
-                            public void onAdClicked() {
-
-                            }
-
-                            @Override
-                            public void onAdDismissedFullScreenContent() {
-
-                                mInterstitialAd = null;
-                                isAdShowIng = false;
-                            }
-
-                            @Override
-                            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
-
-                                mInterstitialAd = null;
-                                sourov.showToast(adError.getMessage());
-                            }
-
-                            @Override
-                            public void onAdImpression() {
-
-                            }
-
-                            @Override
-                            public void onAdShowedFullScreenContent() {
-                                isAdShowIng = true;
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        // Handle the error
-                        sourov.showToast(loadAdError.getMessage());
-                        mInterstitialAd = null;
-                    }
-                });
-    }
 
 
     @Override

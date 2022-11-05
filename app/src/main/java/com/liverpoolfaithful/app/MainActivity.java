@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.facebook.appevents.AppEventsLogger;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -31,17 +32,21 @@ import com.liverpoolfaithful.app.helper.SaveState;
 
 import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 
+import com.facebook.FacebookSdk;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
     MasterSourov sourov;
     ViewPager2 viewPager2;
     BottomNavigationView bottom_navigation_homepage;
-
+    AppEventsLogger logger ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        logger =   AppEventsLogger.newLogger(getApplicationContext());
 
         String postID;
         postID = getIntent().getStringExtra("postID");
@@ -113,6 +118,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    /**
+     * This function assumes logger is an instance of AppEventsLogger and has been
+     * created using AppEventsLogger.newLogger() call.
+     */
+
+    public void logSentFriendRequestEvent () {
+        logger.logEvent("sentFriendRequest");
+    }
 
     @Override
     protected void onResume() {

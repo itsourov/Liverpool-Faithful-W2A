@@ -10,8 +10,8 @@ android {
         applicationId "com.liverpoolfaithful.app"
         minSdk 21
         targetSdk 32
-        versionCode 204
-        versionName "2.4"
+        versionCode 205
+        versionName "2.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -65,4 +65,7 @@ dependencies {
     implementation 'androidx.core:core-splashscreen:1.0.0'
 
     implementation 'com.google.android.gms:play-services-ads:21.1.0'
+
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
+
 }

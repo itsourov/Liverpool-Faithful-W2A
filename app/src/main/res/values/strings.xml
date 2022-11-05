@@ -70,4 +70,9 @@
     <string name="interstitial_ads_id">ca-app-pub-2620840717119991/9711266384</string>
     <string name="native_ad_id">ca-app-pub-2620840717119991/5772021379</string>
 
+
+    <string name="facebook_app_id">1196011101129319</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">5f083ff15d46ac2edd41877e1c78a803</string>
+
 </resources>

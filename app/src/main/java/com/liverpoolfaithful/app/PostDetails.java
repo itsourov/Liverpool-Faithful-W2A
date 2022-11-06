@@ -172,6 +172,10 @@ public class PostDetails extends AppCompatActivity {
             }
         });
 
+        if (Configs.showInterstitialAds){
+            sourov.showInterstitialAds();
+        }
+
 
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, postID);
@@ -454,9 +458,7 @@ public class PostDetails extends AppCompatActivity {
             if (Configs.showBannerAds){
                 showAds();
             }
-            if (Configs.showInterstitialAds){
-                sourov.showInterstitialAds();
-            }
+
 
 
 

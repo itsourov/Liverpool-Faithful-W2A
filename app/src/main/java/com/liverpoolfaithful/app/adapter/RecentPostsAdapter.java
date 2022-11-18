@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
@@ -181,6 +182,7 @@ public class RecentPostsAdapter extends RecyclerView.Adapter<RecentPostsAdapter.
 
                     Bundle bundle = new Bundle();
                     bundle.putString("title", allPosts.get(position).getTitle());
+                    bundle.putString("details", allPosts.get(position).getDetails());
                     bundle.putString("postID", allPosts.get(position).getId());
                     bundle.putString("imageLink", allPosts.get(position).getFeature_image_full());
                     bundle.putString("selfUrl", allPosts.get(position).getSelfUrl());
@@ -194,6 +196,7 @@ public class RecentPostsAdapter extends RecyclerView.Adapter<RecentPostsAdapter.
                     } else {
                         context.startActivity(i);
                     }
+
 
 
 

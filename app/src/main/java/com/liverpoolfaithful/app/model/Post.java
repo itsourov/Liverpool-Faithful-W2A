@@ -1,6 +1,7 @@
 package com.liverpoolfaithful.app.model;
 public class Post {
     private String title;
+    private String details;
     private String date;
     private String id;
     private String selfUrl;
@@ -80,5 +81,13 @@ public class Post {
 
     public void setAgo_time(String ago_time) {
         this.ago_time = ago_time;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 }

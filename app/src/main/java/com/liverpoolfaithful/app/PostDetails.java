@@ -61,7 +61,7 @@ import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 
 public class PostDetails extends AppCompatActivity {
     Bundle bundle;
-    String imageLink, postID, date, title, content, catID, selfUrl, catName;
+    String imageLink, postID, date, title,details, content, catID, selfUrl, catName;
     ImageView post_img;
     TextView title_text, date_text, comment_text;
     WebView web_view;
@@ -99,6 +99,7 @@ public class PostDetails extends AppCompatActivity {
             title = bundle.getString("title");
             selfUrl = bundle.getString("selfUrl");
             catName = bundle.getString("catName");
+            details = bundle.getString("details");
 
 
 
@@ -158,6 +159,8 @@ public class PostDetails extends AppCompatActivity {
         }
 
         loadPost(postID);
+
+
         getCommentsCount(postID);
 
         findViewById(R.id.floatingActionButton).setOnClickListener(new View.OnClickListener() {
@@ -234,6 +237,16 @@ public class PostDetails extends AppCompatActivity {
     }
 
     private void loadPost(String postID) {
+
+        if (details!=null && !details.isEmpty()){
+            sourov.initWebView(web_view);
+            web_view.setWebViewClient(new myWebViewClient());
+            web_view.loadDataWithBaseURL(null, Constants.CSS_PROPERTIES + details + Constants.js_PROPERTIES, "text/html; charset=utf-8", "UTF-8", null);
+
+
+        }
+
+
         String loadingUrl = Constants.baseRestUrl + "posts/" + postID;
 
         queue = Volley.newRequestQueue(this);
@@ -279,9 +292,12 @@ public class PostDetails extends AppCompatActivity {
             Toast.makeText(this, "Invalid Json Response", Toast.LENGTH_SHORT).show();
             animation_view.setVisibility(View.GONE);
         }
-        sourov.initWebView(web_view);
-        web_view.setWebViewClient(new myWebViewClient());
-        web_view.loadDataWithBaseURL(null, Constants.CSS_PROPERTIES + content + Constants.js_PROPERTIES, "text/html; charset=utf-8", "UTF-8", null);
+        if (details==null || details.isEmpty()) {
+            sourov.initWebView(web_view);
+            web_view.setWebViewClient(new myWebViewClient());
+            web_view.loadDataWithBaseURL(null, Constants.CSS_PROPERTIES + content + Constants.js_PROPERTIES, "text/html; charset=utf-8", "UTF-8", null);
+
+        }
 
 
     }

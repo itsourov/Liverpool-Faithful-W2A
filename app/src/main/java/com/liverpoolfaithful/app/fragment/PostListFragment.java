@@ -251,6 +251,7 @@ public class PostListFragment extends Fragment {
                 JSONObject titleObject = jsonObjectData.getJSONObject("title");
                 p.setTitle(titleObject.getString("rendered"));
 
+             p.setDetails(jsonObjectData.getJSONObject("content").getString("rendered"));
 
                 //extract the id;
                 p.setId(jsonObjectData.getString("id"));

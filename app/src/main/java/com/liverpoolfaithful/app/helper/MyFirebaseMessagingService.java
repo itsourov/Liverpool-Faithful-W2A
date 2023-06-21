@@ -38,14 +38,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendNotification(RemoteMessage remoteMessage) {
-        Intent intent = new Intent(this, PostDetails.class);
+        Intent intent = new Intent(this, NotificationProcess.class);
         intent.putExtra("postID",remoteMessage.getData().get("postID"));
         intent.putExtra("title",remoteMessage.getData().get("title"));
         intent.putExtra("imageLink",remoteMessage.getData().get("imageLink"));
         intent.putExtra("selfUrl",remoteMessage.getData().get("selfUrl"));
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT|PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.FLAG_ONE_SHOT|PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
 
 
         Bitmap defaultLogo = BitmapFactory.decodeResource(this.getResources(), R.drawable.play_store_512);

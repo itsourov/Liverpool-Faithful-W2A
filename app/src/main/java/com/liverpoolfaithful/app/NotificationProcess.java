@@ -11,7 +11,7 @@ public class NotificationProcess extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(NotificationProcess.this, MainActivity.class);
+        Intent intent = new Intent(NotificationProcess.this, PostDetails.class);
         intent.putExtras(getIntent().getExtras());
 
         startActivity(intent);

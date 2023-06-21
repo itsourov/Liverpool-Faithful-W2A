@@ -136,7 +136,6 @@ public class MasterSourov {
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         webView.getSettings().setAllowFileAccess(true);
-        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setDefaultTextEncodingName("utf-8");
@@ -151,7 +150,10 @@ public class MasterSourov {
             webView.getSettings().setDefaultFontSize(23);
         }
 
-        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+
+            WebSettingsCompat.setAlgorithmicDarkeningAllowed(webView.getSettings(), true);
+        }else if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
             switch (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
                 case Configuration.UI_MODE_NIGHT_YES:
                     WebSettingsCompat.setForceDark(webView.getSettings(), WebSettingsCompat.FORCE_DARK_ON);

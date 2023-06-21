@@ -69,6 +69,7 @@
     <string name="banner_ads_id">ca-app-pub-2620840717119991/5383340266</string>
     <string name="interstitial_ads_id">ca-app-pub-2620840717119991/9711266384</string>
     <string name="native_ad_id">ca-app-pub-2620840717119991/5772021379</string>
+    <string name="app_open_ad_id">ca-app-pub-2620840717119991/1559231623</string>
 
 
     <string name="facebook_app_id">1342788429860020</string>

@@ -1,5 +1,10 @@
 package com.liverpoolfaithful.app;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -10,11 +15,6 @@ import androidx.core.splashscreen.SplashScreen;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.widget.ViewPager2;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.facebook.appevents.AppEventsLogger;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,9 +30,11 @@ import com.liverpoolfaithful.app.helper.Configs;
 import com.liverpoolfaithful.app.helper.MasterSourov;
 import com.liverpoolfaithful.app.helper.SaveState;
 
-import dev.shreyaspatil.MaterialDialog.MaterialDialog;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-import com.facebook.FacebookSdk;
+import dev.shreyaspatil.MaterialDialog.MaterialDialog;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawerLayout;
@@ -115,6 +117,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+    
+
+
+        ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Configs.showInterstitialAdsAfterXTime){
+                            sourov.showInterstitialAds();
+                        }                    }
+                });
+            }
+        }, 40, 70, TimeUnit.SECONDS);
 
     }
 

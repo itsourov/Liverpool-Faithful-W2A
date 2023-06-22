@@ -1,13 +1,9 @@
 package com.liverpoolfaithful.app;
 
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -137,42 +133,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }                    }
                 });
             }
-        }, 40, 70, TimeUnit.SECONDS);
+        }, 40, 120, TimeUnit.SECONDS);
 
-        createTimer(5);
+//        createTimer(5);
 
     }
 
 
-    private void createTimer(long seconds) {
-
-        CountDownTimer countDownTimer =
-                new CountDownTimer(seconds * 1000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-
-                    }
-
-                    @Override
-                    public void onFinish() {
-
-
-                        Application application = getApplication();
-                        if (!(application instanceof MyApplication)) {
-                            Log.e("ADS","Failed to cast application to MyApplication.");
-
-                            return;
-                        }
-
-                        // Show the app open ad.
-                        ((MyApplication) application)
-                                .showAdIfAvailable(MainActivity.this, () -> {
-
-                                });
-                    }
-                };
-        countDownTimer.start();
-    }
+//    private void createTimer(long seconds) {
+//
+//        CountDownTimer countDownTimer =
+//                new CountDownTimer(seconds * 1000, 1000) {
+//                    @Override
+//                    public void onTick(long millisUntilFinished) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onFinish() {
+//
+//
+//                        Application application = getApplication();
+//                        if (!(application instanceof MyApplication)) {
+//                            Log.e("ADS","Failed to cast application to MyApplication.");
+//
+//                            return;
+//                        }
+//
+//                        // Show the app open ad.
+//                        ((MyApplication) application)
+//                                .showAdIfAvailable(MainActivity.this, () -> {
+//
+//                                });
+//                    }
+//                };
+//        countDownTimer.start();
+//    }
 
     /**
      * This function assumes logger is an instance of AppEventsLogger and has been

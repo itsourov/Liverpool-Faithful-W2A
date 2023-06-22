@@ -489,7 +489,7 @@ public class PostDetails extends AppCompatActivity {
             }
         });
 
-        AdView mAdView = findViewById(R.id.adViewInPostDetails);
+//        AdView mAdView = findViewById(R.id.adViewInPostDetails);
         AdView mAdViewTop = findViewById(R.id.adViewInPostDetailsTop);
         AdView mAdViewBottom = findViewById(R.id.adViewInPostDetailsBottom);
 

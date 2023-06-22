@@ -20,7 +20,7 @@
         android:title="Dark Mode" />
 
     <SwitchPreference
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:summary="@string/pref_animation_sum"
         android:key="pref_animation"
         android:title="Animation" />

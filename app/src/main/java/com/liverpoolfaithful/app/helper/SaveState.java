@@ -23,7 +23,7 @@ public class SaveState {
         return mSettingsPreferences.getBoolean("perf_notification", true);
     }
     public boolean isAnimationOn() {
-        return mSettingsPreferences.getBoolean("pref_animation", true);
+        return mSettingsPreferences.getBoolean("pref_animation", false);
     }
 
 

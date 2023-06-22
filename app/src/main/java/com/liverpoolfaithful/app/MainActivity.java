@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }, 40, 70, TimeUnit.SECONDS);
 
-        createTimer(3);
+        createTimer(5);
 
     }
 

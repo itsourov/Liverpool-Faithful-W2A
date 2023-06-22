@@ -498,7 +498,7 @@ public class PostDetails extends AppCompatActivity {
 
         AdRequest adRequest = new AdRequest.Builder().build();
 
-        mAdView.loadAd(adRequest);
+//        mAdView.loadAd(adRequest);
         mAdViewTop.loadAd(adRequest);
         mAdViewBottom.loadAd(adRequest);
     }

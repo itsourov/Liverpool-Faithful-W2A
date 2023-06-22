@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -142,44 +143,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private long secondsRemaining;
 
     private void createTimer(long seconds) {
-        final TextView counterTextView = findViewById(R.id.timer);
 
         CountDownTimer countDownTimer =
                 new CountDownTimer(seconds * 1000, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
-                        secondsRemaining = ((millisUntilFinished / 1000) + 1);
-                        counterTextView.setText("App is done loading in: " + secondsRemaining);
+
                     }
 
                     @Override
                     public void onFinish() {
-                        secondsRemaining = 0;
-                        counterTextView.setText("Done.");
+
 
                         Application application = getApplication();
-
-                        // If the application is not an instance of MyApplication, log an error message and
-                        // start the MainActivity without showing the app open ad.
                         if (!(application instanceof MyApplication)) {
-                          sourov.showToast("Failed to cast application to MyApplication.");
+                            Log.e("ADS","Failed to cast application to MyApplication.");
 
                             return;
                         }
 
                         // Show the app open ad.
                         ((MyApplication) application)
-                                .showAdIfAvailable(
-                                        MainActivity.this,
-                                        new MyApplication.OnShowAdCompleteListener() {
-                                            @Override
-                                            public void onShowAdComplete() {
-                                                sourov.showToast("go next");
-                                            }
-                                        });
+                                .showAdIfAvailable(MainActivity.this, () -> {
+
+                                });
                     }
                 };
         countDownTimer.start();

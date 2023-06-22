@@ -7,7 +7,6 @@ import android.app.Application.ActivityLifecycleCallbacks;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,17 +38,12 @@ public class MyApplication extends Application
     public void onCreate() {
         super.onCreate();
         this.registerActivityLifecycleCallbacks(this);
-
         // Log the Mobile Ads SDK version.
         Log.d(TAG, "Google Mobile Ads SDK Version: " + MobileAds.getVersion());
 
         MobileAds.initialize(
                 this,
-                new OnInitializationCompleteListener() {
-                    @Override
-                    public void onInitializationComplete(
-                            @NonNull InitializationStatus initializationStatus) {}
-                });
+                initializationStatus -> {});
 
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
         appOpenAdManager = new AppOpenAdManager();
@@ -71,10 +65,7 @@ public class MyApplication extends Application
 
     @Override
     public void onActivityStarted(@NonNull Activity activity) {
-        // An ad activity is started when an ad is showing, which could be AdActivity class from Google
-        // SDK or another activity class implemented by a third party mediation partner. Updating the
-        // currentActivity only when an ad is not showing will ensure it is not an ad activity, but the
-        // one that shows the ad.
+
         if (!appOpenAdManager.isShowingAd) {
             currentActivity = activity;
         }
@@ -162,7 +153,6 @@ public class MyApplication extends Application
                             loadTime = (new Date()).getTime();
 
                             Log.d(LOG_TAG, "onAdLoaded.");
-                            Toast.makeText(context, "onAdLoaded", Toast.LENGTH_SHORT).show();
                         }
 
                         /**
@@ -174,7 +164,6 @@ public class MyApplication extends Application
                         public void onAdFailedToLoad(LoadAdError loadAdError) {
                             isLoadingAd = false;
                             Log.d(LOG_TAG, "onAdFailedToLoad: " + loadAdError.getMessage());
-                            Toast.makeText(context, "onAdFailedToLoad", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -245,7 +234,6 @@ public class MyApplication extends Application
                             isShowingAd = false;
 
                             Log.d(LOG_TAG, "onAdDismissedFullScreenContent.");
-                            Toast.makeText(activity, "onAdDismissedFullScreenContent", Toast.LENGTH_SHORT).show();
 
                             onShowAdCompleteListener.onShowAdComplete();
                             loadAd(activity);
@@ -258,10 +246,7 @@ public class MyApplication extends Application
                             isShowingAd = false;
 
                             Log.d(LOG_TAG, "onAdFailedToShowFullScreenContent: " + adError.getMessage());
-                            Toast.makeText(activity, "onAdFailedToShowFullScreenContent", Toast.LENGTH_SHORT)
-                                    .show();
 
-                            onShowAdCompleteListener.onShowAdComplete();
                             loadAd(activity);
                         }
 
@@ -269,7 +254,7 @@ public class MyApplication extends Application
                         @Override
                         public void onAdShowedFullScreenContent() {
                             Log.d(LOG_TAG, "onAdShowedFullScreenContent.");
-                            Toast.makeText(activity, "onAdShowedFullScreenContent", Toast.LENGTH_SHORT).show();
+
                         }
                     });
 

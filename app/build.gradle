@@ -10,8 +10,8 @@ android {
         applicationId "com.liverpoolfaithful.app"
         minSdk 21
         targetSdk 33
-        versionCode 206
-        versionName "2.6"
+        versionCode 209
+        versionName "2.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

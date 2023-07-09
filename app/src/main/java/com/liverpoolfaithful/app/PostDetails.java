@@ -84,12 +84,23 @@ public class PostDetails extends AppCompatActivity {
             setContentView(R.layout.activity_post_details);
         }
 
+        sourov = new MasterSourov(PostDetails.this);
+
+        if (Configs.showInterstitialAdsInPostDetailsOpening){
+            sourov.showInterstitialAds();
+        }
+
+
+        if (Configs.showBannerAds){
+            showAds();
+        }
+
         // Obtain the FirebaseAnalytics instance.
         FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
 
         saveState = new SaveState(PostDetails.this);
-        sourov = new MasterSourov(PostDetails.this);
+
         bookmarkSaver = new BookmarkSaver(PostDetails.this);
 
         bundle = getIntent().getExtras();
@@ -175,9 +186,6 @@ public class PostDetails extends AppCompatActivity {
             }
         });
 
-        if (Configs.showInterstitialAdsInPostDetailsOpening){
-            sourov.showInterstitialAds();
-        }
 
 
         Bundle bundle = new Bundle();
@@ -251,27 +259,24 @@ public class PostDetails extends AppCompatActivity {
 
         queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, loadingUrl,
-                this::processData, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+                this::processData, error -> {
 
-                MaterialDialog mDialog = new MaterialDialog.Builder(PostDetails.this)
-                        .setAnimation(R.raw.no_internet)
-                        .setTitle(getResources().getString(R.string.got_an_error))
-                        .setMessage(sourov.getVolleyResponse(error))
-                        .setCancelable(false)
-                        .setPositiveButton(getResources().getString(R.string.retry), (dialogInterface, which) -> {
-                            finish();
-                            startActivity(getIntent());
-                            overridePendingTransition(0, 0);
-                        })
-                        .setNegativeButton(getResources().getString(R.string.cancel), (dialogInterface, which) -> dialogInterface.dismiss())
-                        .build();
+                    MaterialDialog mDialog = new MaterialDialog.Builder(PostDetails.this)
+                            .setAnimation(R.raw.no_internet)
+                            .setTitle(getResources().getString(R.string.got_an_error))
+                            .setMessage(sourov.getVolleyResponse(error))
+                            .setCancelable(false)
+                            .setPositiveButton(getResources().getString(R.string.retry), (dialogInterface, which) -> {
+                                finish();
+                                startActivity(getIntent());
+                                overridePendingTransition(0, 0);
+                            })
+                            .setNegativeButton(getResources().getString(R.string.cancel), (dialogInterface, which) -> dialogInterface.dismiss())
+                            .build();
 
-                // Show Dialog
-                mDialog.show();
-            }
-        });
+                    // Show Dialog
+                    mDialog.show();
+                });
 
         if (!Configs.shouldCacheRequest) {
             stringRequest.setShouldCache(false);
@@ -471,9 +476,7 @@ public class PostDetails extends AppCompatActivity {
             animation_view.setVisibility(View.GONE);
             postLoaded = true;
 
-            if (Configs.showBannerAds){
-                showAds();
-            }
+
 
 
 

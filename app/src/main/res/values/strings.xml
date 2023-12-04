@@ -65,11 +65,11 @@
     <string name="related_posts">You might like:</string>
     <string name="no_comments_found">No comments found</string>
     <string name="submit">Submit</string>
-    <string name="admob_app_id">ca-app-pub-2620840717119991~2498990771</string>
-    <string name="banner_ads_id">ca-app-pub-2620840717119991/5383340266</string>
-    <string name="interstitial_ads_id">ca-app-pub-2620840717119991/9711266384</string>
-    <string name="native_ad_id">ca-app-pub-2620840717119991/5772021379</string>
-    <string name="app_open_ad_id">ca-app-pub-2620840717119991/1559231623</string>
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="banner_ads_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstitial_ads_id">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="native_ad_id">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="app_open_ad_id">ca-app-pub-3940256099942544/9257395921</string>
 
 
     <string name="facebook_app_id">1342788429860020</string>
